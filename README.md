@@ -1,4 +1,5 @@
 # FanVerse-backend
+Backend codebase for the FanVerse project
 
 ## Quick Start
 
