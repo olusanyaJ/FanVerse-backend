@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { createNewUser, authenticateUser } = require("./controller");
+const auth = require("../../middleware/auth");
 
+router.get("/profile", auth, (req, res) => {
+  res.status(200).send(req.currentUser);
+});
 /**
  * POST /fanverse/api/user/signup
  * - creates a new user on signup
