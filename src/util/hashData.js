@@ -9,4 +9,13 @@ const hashData = async (data, saltRounds = 10) => {
   }
 };
 
-module.exports = { hashData };
+const verifyHashedData = async (unhashed, hashed) => {
+  try {
+    const hashMatch = await bcrypt.compare(unhashed, hashed);
+    return hashMatch;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { hashData, verifyHashedData };
