@@ -3,9 +3,33 @@ const router = express.Router();
 const { createNewUser, authenticateUser } = require("./controller");
 const auth = require("../../middleware/auth");
 
+/**
+ *  GET /my-profile
+ *  -   Gets information about the currently logged in user.
+ * -   Expected headers: auth middleware
+ */
 router.get("/profile", auth, (req, res) => {
   res.status(200).send(req.currentUser);
 });
+
+/**
+ * GET /user/:id
+ * - Retrieves a specific user from the users table
+ */
+router.get("/:id", async (req, res) => {
+  try {
+    const { _id } = req.body;
+
+    const fetchedUser = await User.findOne({ _id });
+    if (!fetchedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(fetchedUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 /**
  * POST /fanverse/api/user/signup
  * - creates a new user on signup
