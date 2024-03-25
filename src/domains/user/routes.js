@@ -5,8 +5,8 @@ const auth = require("../../middleware/auth");
 const { sendVerificationOTPEmail } = require("../email/controller");
 
 /**
- *  GET /my-profile
- *  -   Gets information about the currently logged in user.
+ *  GET /profile
+ * -   Gets information about the currently logged in user.
  * -   Expected headers: auth middleware
  */
 router.get("/profile", auth, (req, res) => {
