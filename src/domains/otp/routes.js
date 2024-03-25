@@ -1,11 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const { sendOTP } = require("./controller");
+const { sendOTP, verifyOTP } = require("./controller");
 
 /**
- * POST /fanverse/api/user/signup
- * - creates a new user on signup
- * - Expected body: { username, email, password }
+ * POST /fanverse/api/otp/verify
+ * - verifies otp created
+ * - Expected body: { email, otp }
+ */
+router.post("/verify", async (req, res) => {
+  try {
+    let { email, otp } = req.body;
+
+    const verifiedOTP = await verifyOTP({ email, otp });
+    res.status(200).json({ valid: verifiedOTP });
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+/**
+ * POST /fanverse/api/otp/
+ * - creates otp
+ * - Expected body: { email, subject, message, duration }
  */
 router.post("/", async (req, res) => {
   try {
